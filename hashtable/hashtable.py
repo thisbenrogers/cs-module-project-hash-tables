@@ -15,60 +15,6 @@ class HashTableEntry:
                 f"\n\tkey={self.key}"
                 f"\n\tvalue={self.value}\n)")
 
-    def get_value(self):
-        return self.value
-    def get_next(self):
-        return self.next
-    def set_next(self, new_next):
-        self.next = new_next
-
-# Linked List to manage chaining collisions
-class LinkedList:
-    def __init__(self):
-        self.head = None
-        self.length = 0
-
-    def __str__(self):
-        return f"length: {self.length}"
-
-    def __repr__(self):
-        return  (f"LinkedList("
-                f"\n\thead={self.head}"
-                f"\n\tlength={self.length}\n)")
-
-    def find(self, key):
-        current_entry = self.head
-        while current_entry is not None:
-            if key == current_entry.key:
-                return current_entry.value
-            else: 
-                current_entry == current_entry.next
-        return None
-
-    
-    def add_to_head(self, key, value):
-        new_entry = HashTableEntry(key, value, self.head)
-        self.head = new_entry
-        self.length += 1
-
-    def delete_entry(self, key):
-        temp = self.head
-        if temp is not None and temp.key == key:
-            self.head = temp.next
-            temp = None
-            return
-        while temp is not None:
-            if temp.key == key:
-                break
-            prev = temp
-            temp = temp.next
-        if temp == None:
-            print('Not Found')
-            return
-        prev.next = temp.next
-        temp = None
-        self.length -= 1
-
 
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
@@ -135,7 +81,7 @@ class HashTable:
 
         for x in key:
             DJB2_hash = ((DJB2_hash << 5) + DJB2_hash) + ord(x)
-        return DJB2_hash & 0xFFFFFFFF
+        return DJB2_hash
 
     def hash_index(self, key):
         """
@@ -155,19 +101,15 @@ class HashTable:
         """
         i = self.hash_index(key)
         if self.storage[i] is None:
-            new_list = LinkedList()
-            new_list.add_to_head(key, value)
-            self.storage.insert(i, new_list)
+            self.storage[i] = HashTableEntry(key, value)
         else:
-            old_list = self.storage[i]
-            old_list.add_to_head(key, value)
-            print(f"old_list: {old_list} -- head: {old_list.head} -- next: {old_list.head.next}")
+            new_entry = HashTableEntry(key, value)
+            new_entry.next = self.storage[i]
+            self.storage[i] = new_entry
         self.count += 1
-
         ### Test for resizing
         # if (self.get_load_factor() > 0.7):
-            # Double size of Array
-            # Then copy everything over, one at a time, re-hashing again
+            # self = self.resize(self.capacity * 2)
 
     def delete(self, key):
         """
@@ -178,15 +120,21 @@ class HashTable:
         Implement this.
         """
         i = self.hash_index(key)
-        linked_list = self.storage[i]
-        linked_list.delete_entry(key)
+        temp = self.storage[i]
+        while temp.next is not None:
+            if temp.key == key:
+                temp.value = None
+                return
+            else:
+                temp = temp.next
+        if temp.next is None:
+            if temp.key == key:
+                temp.value = None
         self.count -= 1
-
         ### Test for resizing
         # if (self.get_load_factor() < 0.2):
             # THIS IS A STRETCH GOAL
-            # Cut the Array down in half
-            # Then copy everything over, one at a time, re-hashing again
+            # self = self.resize(self.capacity / 2)
 
     def get(self, key):
         """
@@ -197,14 +145,12 @@ class HashTable:
         Implement this.
         """
         i = self.hash_index(key)
-        print(f"i {i}")
-        if self.storage[i] is None:
-            return None
-        linked_list = self.storage[i]
-        text = linked_list.find(key)
-        if text is None:
-            return None
-        return text
+        temp = self.storage[i]
+        while temp:
+            if temp.key == key:
+                return temp.value
+            temp = temp.next
+        return None
         
     def resize(self, new_capacity):
         """
