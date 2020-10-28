@@ -104,7 +104,14 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        i = self.hash_index(key)
+        
+        if self.storage[i] is None:
+            self.storage[i] = HashTableEntry(key, value)
+        else:
+            new_entry = HashTableEntry(key, value)
+            new_entry.next = self.storage[i]
+            self.storage[i] = new_entry
 
 
     def delete(self, key):
