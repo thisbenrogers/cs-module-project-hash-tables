@@ -7,6 +7,14 @@ class HashTableEntry:
         self.value = value
         self.next = None
 
+    def __str__(self):
+        return f"{self.value}"
+
+    def __repr__(self):
+        return  (f"HashtableEntry("
+                f"\n\tkey={self.key}"
+                f"\n\tvalue={self.value}\n")
+
 
 # Hash table can't have fewer than this many slots
 MIN_CAPACITY = 8
