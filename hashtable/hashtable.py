@@ -47,7 +47,7 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        return len(self.storage)
 
 
     def get_load_factor(self):
@@ -56,7 +56,7 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        return self.count / self.get_num_slots()
 
 
     def fnv1(self, key):
