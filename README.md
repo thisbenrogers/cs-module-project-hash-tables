@@ -82,3 +82,10 @@ full-featured.)
 * [Cracking Caesar Ciphers](applications/crack_caesar/)
 * [Sum and Difference](applications/sumdiff/)
 
+
+
+## CLASS NOTES
+
+ hash tables are beloved by programmers for providing key/value storage with constant big-O time complexity for insertion, deletion and search.
+
+ 
