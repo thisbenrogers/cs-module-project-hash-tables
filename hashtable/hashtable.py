@@ -122,7 +122,20 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        i = self.hash_index(key)
+        temp = self.storage[i]
+
+        while temp.next is not None:
+            if temp.key = key:
+                temp.value = None
+                return
+            else:
+                temp = temp.next
+        if temp.next is None:
+            if temp.key = key:
+                temp.value = None
+        self.count -= 1
+
 
 
     def get(self, key):
