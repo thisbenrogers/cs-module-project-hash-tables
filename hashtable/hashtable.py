@@ -66,7 +66,13 @@ class HashTable:
         Implement this, and/or DJB2.
         """
 
-        # Your code here
+        # FNV_offset_basis = 14695981039346656037
+        # FNV_prime = 1099511628211
+
+        # for x in key:
+        #     FNV_offset_basis = FNV_offset_basis * FNV_prime
+        #     FNV_offset_basis = FNV_offset_basis ^ ord(x)
+        # return FNV_offset_basis
 
 
     def djb2(self, key):
