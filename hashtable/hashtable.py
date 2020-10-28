@@ -75,7 +75,11 @@ class HashTable:
 
         Implement this, and/or FNV-1.
         """
-        # Your code here
+        DJB2_HASH = 5381
+
+        for x in key:
+            DJB2_HASH = ((DJB2_HASH << 5) + DJB2_HASH) + ord(x)
+        return DJB2_HASH
 
 
     def hash_index(self, key):
