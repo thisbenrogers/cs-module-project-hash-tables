@@ -126,13 +126,13 @@ class HashTable:
         temp = self.storage[i]
 
         while temp.next is not None:
-            if temp.key = key:
+            if temp.key == key:
                 temp.value = None
                 return
             else:
                 temp = temp.next
         if temp.next is None:
-            if temp.key = key:
+            if temp.key == key:
                 temp.value = None
         self.count -= 1
 
