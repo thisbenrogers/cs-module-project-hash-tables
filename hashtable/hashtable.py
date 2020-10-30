@@ -34,6 +34,7 @@ class HashTable:
         else:
             self.capacity = capacity
         self.storage = [None] * capacity
+        self.old_storage = None
         self.count = 0
 
 
@@ -156,8 +157,6 @@ class HashTable:
             temp = temp.next
         return None
 
-
-
     def resize(self, new_capacity):
         """
         Changes the capacity of the hash table and
@@ -165,7 +164,25 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+
+        if new_capacity < MIN_CAPACITY:
+            return None
+        else:
+            self.old_storage = self.storage
+            self.storage = [None] * new_capacity
+            self.count = 0
+        
+        for slot in self.old_storage:
+            temp = slot.next
+            if slot is not None:
+                self.put(slot.key, slot.value)
+            while temp is not None:
+                self.put(temp.key, temp.value)
+                temp = temp.next
+
+        self.old_storage = None
+        return None
+        
 
 
 
