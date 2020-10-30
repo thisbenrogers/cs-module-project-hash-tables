@@ -170,6 +170,7 @@ class HashTable:
         else:
             self.old_storage = self.storage
             self.storage = [None] * new_capacity
+            self.capacity = new_capacity
             self.count = 0
         
         for slot in self.old_storage:
