@@ -66,13 +66,13 @@ class HashTable:
         Implement this, and/or DJB2.
         """
 
-        # FNV_offset_basis = 14695981039346656037
-        # FNV_prime = 1099511628211
+        FNV_offset_basis = 14695981039346656037
+        FNV_prime = 1099511628211
 
-        # for x in key:
-        #     FNV_offset_basis = FNV_offset_basis * FNV_prime
-        #     FNV_offset_basis = FNV_offset_basis ^ ord(x)
-        # return FNV_offset_basis
+        for x in key:
+            FNV_offset_basis = FNV_offset_basis * FNV_prime
+            FNV_offset_basis = FNV_offset_basis ^ ord(x)
+        return FNV_offset_basis
 
 
     def djb2(self, key):
@@ -93,7 +93,7 @@ class HashTable:
         Take an arbitrary key and return a valid integer index
         between within the storage capacity of the hash table.
         """
-        #return self.fnv1(key) % self.capacity
+        # return self.fnv1(key) % self.capacity
         return self.djb2(key) % self.capacity
 
     def put(self, key, value):
@@ -112,6 +112,7 @@ class HashTable:
             new_entry = HashTableEntry(key, value)
             new_entry.next = self.storage[i]
             self.storage[i] = new_entry
+        self.count += 1
 
 
     def delete(self, key):
