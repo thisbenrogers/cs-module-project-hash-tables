@@ -114,6 +114,7 @@ class HashTable:
             new_entry.next = self.storage[i]
             self.storage[i] = new_entry
         self.count += 1
+        return None
 
 
     def delete(self, key):
@@ -130,13 +131,14 @@ class HashTable:
         while temp.next is not None:
             if temp.key == key:
                 temp.value = None
-                return
+                return None
             else:
                 temp = temp.next
         if temp.next is None:
             if temp.key == key:
                 temp.value = None
         self.count -= 1
+        return None
 
 
 
@@ -157,6 +159,15 @@ class HashTable:
             temp = temp.next
         return None
 
+    def should_resize(self):
+        load_factor = self.get_load_factor()
+        num_slots = self.get_num_slots()
+        if load_factor > 0.7:
+            self.resize(int(num_slots * 2))
+        if load_factor < 0.2:
+            self.resize(int(num_slots / 2))
+        return None
+
     def resize(self, new_capacity):
         """
         Changes the capacity of the hash table and
@@ -174,9 +185,11 @@ class HashTable:
             self.count = 0
         
         for slot in self.old_storage:
-            temp = slot.next
+            temp = None
             if slot is not None:
                 self.put(slot.key, slot.value)
+            if next in self.__dict__:
+                temp = slot.next
             while temp is not None:
                 self.put(temp.key, temp.value)
                 temp = temp.next
