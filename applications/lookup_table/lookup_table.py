@@ -9,13 +9,14 @@ def slowfun_too_slow(x, y):
     v %= 982451653
 
     return v
+    
+table = {}
 
 def slowfun(x, y):
     """
     Rewrite slowfun_too_slow() in here so that the program produces the same
     output, but completes quickly instead of taking ages to run.
     """
-    table = {}
     if (x, y) in table:
         return table[(x, y)]
     else:
