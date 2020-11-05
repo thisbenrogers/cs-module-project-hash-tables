@@ -1,5 +1,29 @@
 def word_count(s):
-    # Your code here
+    # * sets up dictionary
+    table = {}
+
+    # * base check
+    if len(s) <= 0:
+        return table
+
+    # * clears irrelevant characters and converts s to lowercase
+    ignore = '":;,.-+=/\|[]{}()*^&'
+    new_s = s.lower()
+
+    for char in ignore:
+        new_s = new_s.replace(char, "")
+
+    # * creates a list using each word in the string
+    s_arr = new_s.split()
+
+    # * iterates through list, tallying a count for each entry
+    for word in s_arr:
+        if word in table:
+            table[word] += 1
+        else:
+            table[word] = 1
+    
+    return table
 
 
 
